@@ -1,6 +1,7 @@
 package start.method;
 
 public class MethodOverloading1 {
+
     public static void main(String[] args) {
         int a = 1;
         int b = 2;
@@ -36,6 +37,7 @@ public class MethodOverloading1 {
     public static void myMethod(int a, double b) {
         System.out.println("int a, double b");
     }
+
     public static void myMethod(double a, int b) {
         System.out.println("double a, int b");
     }
