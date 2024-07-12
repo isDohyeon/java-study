@@ -28,8 +28,8 @@ public class PrintOrderMain3 {
 
         printOrders(orders);
 
-        int toatlAmount = getTotalAmount(orders);
-        System.out.println("총 결제 금액 : " + toatlAmount);
+        int totalAmount = getTotalAmount(orders);
+        System.out.println("총 결제 금액 : " + totalAmount);
     }
 
     static ProductOrder createOrders(String productName, int price, int quantity) {
