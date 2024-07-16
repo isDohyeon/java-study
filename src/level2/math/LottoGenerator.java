@@ -3,6 +3,7 @@ package level2.math;
 import java.util.Random;
 
 public class LottoGenerator {
+
     private final Random random = new Random();
     private int[] lotto = new int[6];
 
@@ -12,7 +13,7 @@ public class LottoGenerator {
             do {
                 number = random.nextInt(45) + 1;
             } while (!isUnique(number, i));
-            
+
             lotto[i] = number;
         }
 
