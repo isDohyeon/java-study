@@ -1,0 +1,15 @@
+package level3.exception.ex2;
+
+public class ConnectExceptionV4 extends NetworkClientExceptionV4 {
+
+    private final String address;
+
+    public ConnectExceptionV4(String message, String address) {
+        super(message);
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+}
