@@ -1,6 +1,4 @@
-package level4.collection.link;
-
-import level4.collection.array.MyArrayListV1;
+package level4.linkedlist;
 
 public class MyLinkedListV1Main {
 

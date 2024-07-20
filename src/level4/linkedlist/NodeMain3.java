@@ -1,4 +1,4 @@
-package level4.collection.link;
+package level4.linkedlist;
 
 public class NodeMain3 {
 

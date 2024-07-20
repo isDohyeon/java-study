@@ -1,23 +1,25 @@
-package level4.collection.array;
+package level4.arraylist;
 
 import java.util.Arrays;
 
-public class MyArrayListV3 {
+// 제네릭 타입으로 선언
+public class MyArrayList<E> {
     // 상수로 선언한 배열 크기 - 기본 수용량
     private static final int DEFAULT_CAPACITY = 5;
 
     //  다양한 타입의 데이터를 보관하기 위한 Object 타입 배열
+    // 제네릭의 타입 이레이저로 인해 Object 타입으로 선언해야 함.
     private Object[] elementData;
     // 배열의 현재 사이즈
     private int size = 0;
 
     // 생성자 1 - 배열 크기 초기화
-    public MyArrayListV3() {
+    public MyArrayList() {
         elementData = new Object[DEFAULT_CAPACITY];
     }
 
     // 생성자 2 - 초기 수용량 (배열 크기) 직접 설정
-    public MyArrayListV3(int initialCapacity) {
+    public MyArrayList(int initialCapacity) {
         elementData = new Object[initialCapacity];
     }
 
@@ -28,7 +30,7 @@ public class MyArrayListV3 {
 
     // 현재 배열의 마지막 인덱스에 값을 추가하고 size 를 1 늘리는 메서드
     // 배열이 꽉 찼다면 배열 크기를 2배로 늘림
-    public void add(Object o) {
+    public void add(E o) {
         if (size == elementData.length) {
             grow();
         }
@@ -36,7 +38,7 @@ public class MyArrayListV3 {
     }
 
     // 인수로 전달받은 index 에 값을 추가하는 add 메서드
-    public void add(int index, Object o) {
+    public void add(int index, E o) {
         if (size == elementData.length) {
             grow();
         }
@@ -60,8 +62,8 @@ public class MyArrayListV3 {
     }
 
     // 인수로 넘어온 index 값 삭제하는 메서드
-    public Object remove(int index) {
-        Object oldValue = get(index);
+    public E remove(int index) {
+        E oldValue = get(index);
         shiftLeftFrom(index);
 
         size--;
@@ -78,14 +80,15 @@ public class MyArrayListV3 {
     }
 
     // 현재 배열에서 인수로 넘어온 값의 index 값을 반환해주는 메서드
-    public Object get(int index) {
-        return elementData[index];
+    @SuppressWarnings("unchecked")
+    public E get(int index) {
+        return (E) elementData[index];
     }
 
     // 현재 배열에 인수로 넘어온 index 값에 newValue 로 바꾸고
     // 기존의 값을 반환해주는 메서드
-    public Object set(int index, Object newValue) {
-        Object oldValue = get(index);
+    public E set(int index, E newValue) {
+        E oldValue = get(index);
         elementData[index] = newValue;
         return oldValue;
     }
@@ -93,7 +96,7 @@ public class MyArrayListV3 {
     // 인수로 넘어온 값을 현재 배열에서 검색한 뒤
     // 해당 값의 인덱스를 반환해주는 메서드
     // 해당 값이 존재하지 않는다면 -1 반환
-    public int indexOf(Object o) {
+    public int indexOf(E o) {
         for (int i = 0; i < size; i++) {
             if (o.equals(elementData[i])) {
                 return i;

@@ -1,8 +1,8 @@
-package level4.collection.array;
+package level4.arraylist;
 
 import java.util.Arrays;
 
-public class MyArrayListV2 {
+public class MyArrayListV3 {
     // 상수로 선언한 배열 크기 - 기본 수용량
     private static final int DEFAULT_CAPACITY = 5;
 
@@ -12,12 +12,12 @@ public class MyArrayListV2 {
     private int size = 0;
 
     // 생성자 1 - 배열 크기 초기화
-    public MyArrayListV2() {
+    public MyArrayListV3() {
         elementData = new Object[DEFAULT_CAPACITY];
     }
 
     // 생성자 2 - 초기 수용량 (배열 크기) 직접 설정
-    public MyArrayListV2(int initialCapacity) {
+    public MyArrayListV3(int initialCapacity) {
         elementData = new Object[initialCapacity];
     }
 
@@ -26,7 +26,7 @@ public class MyArrayListV2 {
         return size;
     }
 
-    // 현재 배열에 값을 추가하고 size 를 1 늘리는 메서드
+    // 현재 배열의 마지막 인덱스에 값을 추가하고 size 를 1 늘리는 메서드
     // 배열이 꽉 찼다면 배열 크기를 2배로 늘림
     public void add(Object o) {
         if (size == elementData.length) {
@@ -35,12 +35,46 @@ public class MyArrayListV2 {
         elementData[size++] = o;
     }
 
+    // 인수로 전달받은 index 에 값을 추가하는 add 메서드
+    public void add(int index, Object o) {
+        if (size == elementData.length) {
+            grow();
+        }
+        shiftRightFrom(index);
+        elementData[size++] = o;
+    }
+
+    // index 에 값 추가를 위한 index 이후 값을 오른쪽으로 한 칸씩 미는 메서드
+    private void shiftRightFrom(int index) {
+        for (int i = elementData.length - 1; i > index; i--) {
+            elementData[i] = elementData[i - 1];
+        }
+    }
+
     // 배열 크기를 2배로 늘린 새 배열로 참조 변경
     // 기존 배열은 GC당함
     private void grow() {
         int oldCapacity = elementData.length;
         int newCapacity = oldCapacity * 2;
         elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+
+    // 인수로 넘어온 index 값 삭제하는 메서드
+    public Object remove(int index) {
+        Object oldValue = get(index);
+        shiftLeftFrom(index);
+
+        size--;
+        elementData[size] = null;
+        return oldValue;
+    }
+
+    // index 값이 삭제됨에 따라 index 값부터 배열의 끝까지 값을 한 칸씩 땡겨
+    // 값을 채워주는 메서드
+    private void shiftLeftFrom(int index) {
+        for (int i = index; i < size - 1; i++) {
+            elementData[i] = elementData[i + 1];
+        }
     }
 
     // 현재 배열에서 인수로 넘어온 값의 index 값을 반환해주는 메서드

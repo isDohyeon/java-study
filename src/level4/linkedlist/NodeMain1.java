@@ -1,6 +1,4 @@
-package level4.collection.link;
-
-import level2.access.ex.Item;
+package level4.linkedlist;
 
 public class NodeMain1 {
 

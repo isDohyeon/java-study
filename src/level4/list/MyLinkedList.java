@@ -1,15 +1,15 @@
-package level4.collection.link;
+package level4.list;
 
 // 제네릭 클래스 MyLinkedList
-public class MyLinkedList<E> {
+public class MyLinkedList<E> implements MyList<E> {
 
     // 노드의 첫 번째
     private Node<E> first;
     // 노드의 갯수
     private int size = 0;
 
-
     // 새로운 값을 마지막 노드에 추가
+    @Override
     public void add(E e) {
         Node<E> newNode = new Node<>(e);
         if (first == null) {
@@ -22,6 +22,7 @@ public class MyLinkedList<E> {
     }
 
     // 인덱스를 전달받아 해당 위치에 값 추가
+    @Override
     public void add(int index, E e) {
         Node<E> newNode = new Node(e);
         if (index == 0) {
@@ -36,6 +37,7 @@ public class MyLinkedList<E> {
     }
 
     // 전달받은 index 위치의 값 제거
+    @Override
     public E remove(int index) {
         Node<E> removeNode = getNode(index);
         E removedItem = removeNode.item;
@@ -62,6 +64,7 @@ public class MyLinkedList<E> {
 
     // 인수로 전달받은 index 값에 새로운 값 추가
     // 기존 값을 반환
+    @Override
     public E set(int index, E element) {
         Node<E> x = getNode(index);
         E oldValue = x.item;
@@ -70,6 +73,7 @@ public class MyLinkedList<E> {
     }
 
     // 인수 index 의 값 반환
+    @Override
     public E get(int index) {
         Node<E> node = getNode(index);
         return node.item;
@@ -86,6 +90,7 @@ public class MyLinkedList<E> {
 
     // 인수로 전달받은 값이 노드 몇 번째에 있는지 인덱스 값 반환
     // 없다면 -1 반환
+    @Override
     public int indexOf(E o) {
         int index = 0;
         for (Node<E> x = first; x != null; x = x.next) {
@@ -98,6 +103,7 @@ public class MyLinkedList<E> {
     }
 
     // 노드 갯수 (size) 반환
+    @Override
     public int size() {
         return size;
     }
@@ -105,13 +111,12 @@ public class MyLinkedList<E> {
     // MyLinkedList 정보
     @Override
     public String toString() {
-        return "MyLinkedListV1{" +
-                "first=" + first +
-                ", size=" + size +
-                '}';
+        return "노드 = " + first +
+                ", size=" + size;
     }
 
     // 내부 클래스 Node - MyLinkedList 에서만 사용됨
+    // E 타입 노드의 현재 값과 다음 노드의 참조 정보
     private static class Node<E> {
         private E item;
         private Node<E> next;
@@ -120,6 +125,7 @@ public class MyLinkedList<E> {
             this.item = item;
         }
 
+        // 모든 노드의 정보
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
