@@ -5,18 +5,21 @@ public class MyLinkedList<E> implements MyList<E> {
 
     // 노드의 첫 번째
     private Node<E> first;
+    // 노드의 마지막
+    private Node<E> last;
     // 노드의 갯수
     private int size = 0;
 
-    // 새로운 값을 마지막 노드에 추가
+    // 새로운 값을 노드에 추가, 마지막 노드를 업데이트
     @Override
     public void add(E e) {
         Node<E> newNode = new Node<>(e);
         if (first == null) {
             first = newNode;
+            last = newNode;
         } else {
-            Node<E> lastNode = getLastNode();
-            lastNode.next = newNode;
+            last.next = newNode;
+            last = newNode;
         }
         size++;
     }
@@ -24,14 +27,22 @@ public class MyLinkedList<E> implements MyList<E> {
     // 인덱스를 전달받아 해당 위치에 값 추가
     @Override
     public void add(int index, E e) {
-        Node<E> newNode = new Node(e);
+        Node<E> newNode = new Node<>(e);
         if (index == 0) {
             newNode.next = first;
             first = newNode;
+            // 리스트가 비어있을 때 첫 노드를 추가하면 last도 해당 노드를 가리킴
+            if (size == 0) {
+                last = newNode;
+            }
         } else {
             Node<E> prev = getNode(index - 1);
             newNode.next = prev.next;
             prev.next = newNode;
+            // 새로운 노드가 마지막 노드인 경우 last를 새 노드로 업데이트
+            if (newNode.next == null) {
+                last = newNode;
+            }
         }
         size++;
     }
@@ -43,23 +54,22 @@ public class MyLinkedList<E> implements MyList<E> {
         E removedItem = removeNode.item;
         if (index == 0) {
             first = removeNode.next;
+            // 리스트가 비게 되면 last를 null로 설정
+            if (first == null) {
+                last = null;
+            }
         } else {
             Node<E> prev = getNode(index - 1);
             prev.next = removeNode.next;
+            // 마지막 노드를 제거한 경우 last를 이전 노드로 업데이트
+            if (removeNode.next == null) {
+                last = prev;
+            }
         }
         removeNode.next = null;
         removeNode.item = null;
         size--;
         return removedItem;
-    }
-
-    // 마지막 노드 참조 반환
-    private Node<E> getLastNode() {
-        Node<E> x = first;
-        while (x.next != null) {
-            x = x.next;
-        }
-        return x;
     }
 
     // 인수로 전달받은 index 값에 새로운 값 추가
@@ -141,6 +151,5 @@ public class MyLinkedList<E> implements MyList<E> {
             sb.append("]");
             return sb.toString();
         }
-
     }
 }
